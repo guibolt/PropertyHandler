@@ -13,32 +13,13 @@ namespace PropertyHandler.Api.Controllers
     [Route("[controller]")]
     public class Teste : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+      
         private readonly ILogger _logger;
         public Teste(ILogger logger)
         {
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            _logger.Debug("Testando");
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-
-           
-        }
         [HttpPost("arquivo")]
         public IActionResult TesteArq(List<IFormFile> arquivos)
         {

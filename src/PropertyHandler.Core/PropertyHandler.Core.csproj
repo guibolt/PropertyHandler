@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Notifications\" />
     <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

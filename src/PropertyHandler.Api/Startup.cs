@@ -21,7 +21,7 @@ namespace PropertyHandler.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.ResolveDependencies();
+            services.ResolveDependencies(Configuration);
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "PropertyHandler.Api", Version = "v1" }));
             services.AddLogging(logging => logging.AddKissLog());
