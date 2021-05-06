@@ -52,18 +52,20 @@ namespace PropertyHandler.Infra.Repository
         {
             var parametros = new
             {
-                RegisterDate = "GETDATE()",
+                RegisterDate = DateTime.Now,
                 Active = true,
                 entity.Street,
                 entity.LocationNumber,
                 entity.Cep,
                 entity.District,
+                entity.City,
                 entity.State,
                 entity.PropertyId
             };
 
-            var sqlQuery = @"insert into Address (RegisterDate,Active,Street,LocationNumber,Cep,District,State,PropertyId)
-                              Values(RegisterDate,Active,Street,LocationNumber,Cep,District,State,PropertyId)";
+            var sqlQuery = @"insert into Address (RegisterDate,Active,Street,LocationNumber,Cep,District,State,City,PropertyId)
+                             Values(@RegisterDate,@Active,@Street,@LocationNumber,@Cep,@District,@State,@City,@PropertyId)
+                             SELECT @@IDENTITY AS [@@IDENTITY];";
 
             using var connection = new SqlConnection(_sql.GetConnectionString());
             var idInserted = await connection.ExecuteScalarAsync<int>(sqlQuery, parametros);

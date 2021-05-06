@@ -1,9 +1,9 @@
 ﻿using KissLog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PropertyHandler.Api.ViewModels;
 using PropertyHandler.Core.Interfaces;
 using PropertyHandler.Core.Interfaces.Services;
+using PropertyHandler.Core.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,11 +27,11 @@ namespace PropertyHandler.Api.Controllers
             return CustomResponse(properties);
         }
         [HttpPost("register")]
-        public async Task<IActionResult> CadastrarImoveis([FromForm] PropertyViewModel propertyViewModel,List<IFormFile> imagens)
+        public async Task<IActionResult> Register([FromForm] PropertyViewModel propertyViewModel,List<IFormFile> imagens)
         {
+            var insertedId = await _propertyService.RegisterProperty(propertyViewModel);
 
-
-            return Ok();
+            return Created("", insertedId);
         }
     }
 }

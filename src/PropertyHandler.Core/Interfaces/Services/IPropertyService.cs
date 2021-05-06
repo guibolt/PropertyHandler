@@ -1,4 +1,5 @@
 ﻿using PropertyHandler.Core.Entities;
+using PropertyHandler.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace PropertyHandler.Core.Interfaces.Services
 {
     public interface IPropertyService
     {
-        Task<IEnumerable<Property>> GetProperties(); 
+        Task<IEnumerable<Property>> GetProperties();
+
+        Task<int> RegisterProperty(PropertyViewModel propertyViewModel);
     }
 }

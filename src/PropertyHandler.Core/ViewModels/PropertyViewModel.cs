@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PropertyHandler.Core.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace PropertyHandler.Api.ViewModels
+namespace PropertyHandler.Core.ViewModels
 {
     public class PropertyViewModel
     {
@@ -20,5 +21,8 @@ namespace PropertyHandler.Api.ViewModels
         public bool Destaque { get; set; }
         public AddressViewModel Endereco { get; set; }
         public DetailsViewModel Detalhe { get; set; }
+        public string TipoEspecificoPropriedade { get;  set; }
+        public int Tipo { get;  set; }
+        public decimal ValorIPTU { get;  set; }
     }
 }

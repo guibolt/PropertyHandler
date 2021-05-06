@@ -30,9 +30,10 @@ namespace PropertyHandler.Infra.Repository
 
         public async Task<int> Insert(Property entity)
         {
+
             var parametros = new
             {
-                RegisterDate = "GETDATE()",
+                RegisterDate = DateTime.Now,
                 Active = true,
                 entity.Code,
                 entity.Description,
@@ -41,6 +42,7 @@ namespace PropertyHandler.Infra.Repository
                 entity.TaxPrice,
                 entity.CondominiumPrice,
                 entity.OwnerName,
+                entity.IsSpotlight,
                 entity.Status,
                 entity.Type,
                 entity.SpecificType
@@ -53,7 +55,7 @@ namespace PropertyHandler.Infra.Repository
                 SELECT @@IDENTITY AS [@@IDENTITY];";
 
             using var connection = new SqlConnection(_sql.GetConnectionString());
-            var idInserted = await connection.ExecuteScalarAsync<int>(sqlQuery,parametros);
+            var idInserted = await connection.ExecuteScalarAsync<int>(sqlQuery, parametros);
 
             return idInserted;
         }
@@ -62,11 +64,26 @@ namespace PropertyHandler.Infra.Repository
             var sqlQuery = "select * from Properties where Id = @id";
 
             using var connection = new SqlConnection(_sql.GetConnectionString());
-            var property = await connection.QueryFirstOrDefaultAsync<Property>(sqlQuery, new { id});
+            var property = await connection.QueryFirstOrDefaultAsync<Property>(sqlQuery, new { id });
 
             return property;
         }
+        public async Task<bool> UpdateAddressAndDetail(int addressId, int detailId, int propertyId)
+        {
+            var sqlQuery = "update  Properties set AdressId = @addressId, DetailsId = @detailId where Id = @propertyId";
 
+            var param = new
+            {
+                addressId,
+                detailId,
+                propertyId
+            };
+
+            using var connection = new SqlConnection(_sql.GetConnectionString());
+            var updateReturn = await connection.ExecuteAsync(sqlQuery, param);
+
+            return updateReturn == 1;
+        }
         public async Task<Property> GetWithFilters()
         {
             throw new NotImplementedException();

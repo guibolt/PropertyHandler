@@ -1,4 +1,4 @@
-﻿namespace PropertyHandler.Api.ViewModels
+﻿namespace PropertyHandler.Core.ViewModels
 {
     public class DetailsViewModel
     {

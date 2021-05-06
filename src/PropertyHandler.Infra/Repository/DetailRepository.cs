@@ -2,13 +2,14 @@
 using PropertyHandler.Core.Entities;
 using PropertyHandler.Core.Interfaces;
 using PropertyHandler.Core.Interfaces.Repository;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace PropertyHandler.Infra.Repository
 {
-    public class DetailRepository :  IDetailRepository
+    public class DetailRepository : IDetailRepository
     {
         private readonly ISql _sql;
 
@@ -50,11 +51,12 @@ namespace PropertyHandler.Infra.Repository
         public async Task<int> Insert(Detail entity)
         {
             var sqlQuery = @"insert into Details(RegisterDate,IsActive,PropertySize,BedRoomQuantity,CarVacancyQuantity,BathRoomQuantity,PropertyId)
-                             Values(@RegisterDate,@IsActive,@PropertySize,@BedRoomQuantity,@CarVacancyQuantity,@BathRoomQuantity,@PropertyId)";
+                             Values(@RegisterDate,@IsActive,@PropertySize,@BedRoomQuantity,@CarVacancyQuantity,@BathRoomQuantity,@PropertyId)
+                             SELECT @@IDENTITY AS [@@IDENTITY];";
             var parametros = new
             {
-                RegisterDate = "GETDATE()",
-                Active = true,
+                RegisterDate = DateTime.Now,
+                IsActive = true,
                 entity.PropertySize,
                 entity.BedRoomQuantity,
                 entity.CarVacancyQuantity,

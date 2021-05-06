@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PropertyHandler.Api.ViewModels
+namespace PropertyHandler.Core.ViewModels
 {
     public class AddressViewModel
     {
