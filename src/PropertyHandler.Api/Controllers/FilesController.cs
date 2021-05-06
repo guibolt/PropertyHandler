@@ -11,11 +11,11 @@ namespace PropertyHandler.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class Teste : ControllerBase
+    public class FilesController : ControllerBase
     {
       
         private readonly ILogger _logger;
-        public Teste(ILogger logger)
+        public FilesController(ILogger logger)
         {
             _logger = logger;
         }
@@ -38,8 +38,8 @@ namespace PropertyHandler.Api.Controllers
             return Ok(arquivos);
         }
 
-        [HttpGet("File")]
-        public async Task<FileResult> File()
+        [HttpGet("GetPerId/{id:guid}")]
+        public async Task<FileResult> File(Guid id)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "appdata/arquivos", "24736a70-859d-41b6-9108-6786dd57de48_Gordura - 190121 - 2.png");
 

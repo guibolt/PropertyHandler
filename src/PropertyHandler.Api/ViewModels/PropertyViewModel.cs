@@ -18,7 +18,7 @@ namespace PropertyHandler.Api.ViewModels
         [StringLength(50, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string NomeProprietario { get; set; }
         public bool Destaque { get; set; }
-        public AddressViewModel Address { get; set; }
-        public DetailsViewModel Details { get; set; }
+        public AddressViewModel Endereco { get; set; }
+        public DetailsViewModel Detalhe { get; set; }
     }
 }

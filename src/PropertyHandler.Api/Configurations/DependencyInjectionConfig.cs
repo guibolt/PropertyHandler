@@ -6,9 +6,9 @@ using PropertyHandler.Core.Interfaces;
 using PropertyHandler.Core.Interfaces.Repository;
 using PropertyHandler.Core.Interfaces.Services;
 using PropertyHandler.Core.Notifications;
-using PropertyHandler.Core.Sql;
+using PropertyHandler.Infra.Sql;
 using PropertyHandler.Infra.Repository;
-
+using PropertyHandler.Services.Services;
 
 namespace PropertyHandler.Api.Configurations
 {
@@ -18,10 +18,14 @@ namespace PropertyHandler.Api.Configurations
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ILogger>((context) => Logger.Factory.Get());
+            services.AddScoped<INotifier, Notifier>();
 
+            services.AddScoped<IPropertyService, PropertyService>();
 
             services.AddSingleton<ISql>(new Sql(configuration["ConnectionStrings:DefaultConnection"]));
             services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IDetailRepository, DetailRepository>();
 
             return services;
         }

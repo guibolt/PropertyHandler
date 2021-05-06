@@ -12,7 +12,7 @@ namespace PropertyHandler.Api.ViewModels
         [StringLength(10, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
            public string Cep { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(10, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Bairro { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(30, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]

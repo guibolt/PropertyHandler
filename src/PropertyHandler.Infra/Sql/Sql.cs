@@ -1,6 +1,6 @@
 ﻿using PropertyHandler.Core.Interfaces;
 
-namespace PropertyHandler.Core.Sql
+namespace PropertyHandler.Infra.Sql
 {
     public class Sql : ISql
     {

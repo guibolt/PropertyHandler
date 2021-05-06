@@ -23,7 +23,7 @@ namespace PropertyHandler.Api.Configurations
             options.Options
                 .AppendExceptionDetails((Exception ex) =>
                 {
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb = new();
 
                     if (ex is System.NullReferenceException nullRefException)
                         sb.AppendLine("Important: check for null references");

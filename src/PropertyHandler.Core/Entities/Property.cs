@@ -15,7 +15,7 @@ namespace PropertyHandler.Core.Entities
         public string OwnerName { get; set; }
         public bool IsSpotlight { get; set; }
         public Address Address { get; set; }
-        public Details Details { get; set; }
+        public Detail Detail { get; set; }
         public IEnumerable<PropertyImage> Images { get; set; }
         public EPropertyStatus Status { get; set; }
         public EPropertyType Type { get; set; }

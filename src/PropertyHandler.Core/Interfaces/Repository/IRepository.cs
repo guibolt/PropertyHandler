@@ -6,7 +6,7 @@ namespace PropertyHandler.Core.Interfaces.Repository
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<bool> Insert(TEntity entity);
+        Task<int> Insert(TEntity entity);
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetPerId(int id);
     }
