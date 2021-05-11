@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using KissLog;
+using PropertyHandler.Core.Interfaces.Repository;
+using PropertyHandler.Core.Helpers;
+using System.Diagnostics;
 
 namespace PropertyHandler.Api.Controllers
 {
@@ -13,39 +13,29 @@ namespace PropertyHandler.Api.Controllers
     [Route("[controller]")]
     public class FilesController : ControllerBase
     {
-      
         private readonly ILogger _logger;
-        public FilesController(ILogger logger)
+        private readonly IImageRepository _imageRepository;
+
+        public FilesController(ILogger logger, IImageRepository imageRepository)
         {
             _logger = logger;
-        }
-
-        [HttpPost("arquivo")]
-        public IActionResult TesteArq(List<IFormFile> arquivos)
-        {
-            foreach (var arquivo in arquivos)
-            {
-
-                var imgPrefixo = Guid.NewGuid() + "_";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "appdata/arquivos", imgPrefixo + arquivo.FileName);
-
-                using (var stream = System.IO.File.Create(path))
-                {
-                    arquivo.CopyTo(stream);
-                }
-            }
-
-            return Ok(arquivos);
+            _imageRepository = imageRepository;
         }
 
         [HttpGet("GetPerId/{id:guid}")]
-        public async Task<FileResult> File(Guid id)
+        public async Task<FileResult> ReturnFile(Guid id)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "appdata/arquivos", "24736a70-859d-41b6-9108-6786dd57de48_Gordura - 190121 - 2.png");
+            Stopwatch relo = new Stopwatch();
 
+            relo.Start();
+            var imageSeached = await _imageRepository.GetPerFileId(id);
+            var fileExtension = FileHelper.GetFileExtension(imageSeached.FileType);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appdata/arquivos", $"{id}.{fileExtension}");
             var bytes = await System.IO.File.ReadAllBytesAsync(path);
 
-            return File(bytes, "image/png", "24736a70-859d-41b6-9108-6786dd57de48_Gordura - 190121 - 2.png");
+            relo.Stop();
+            return File(bytes, imageSeached.FileType, imageSeached.Name);
         }
     }
 }

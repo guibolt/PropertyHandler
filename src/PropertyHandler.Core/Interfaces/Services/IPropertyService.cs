@@ -1,4 +1,5 @@
-﻿using PropertyHandler.Core.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using PropertyHandler.Core.Entities;
 using PropertyHandler.Core.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace PropertyHandler.Core.Interfaces.Services
     {
         Task<IEnumerable<object>> GetProperties();
 
-        Task<int> RegisterProperty(PropertyViewModel propertyViewModel);
+        Task<int> RegisterProperty(PropertyViewModel propertyViewModel, List<IFormFile> imagens);
 
-        Task<PropertyViewModel> GetProperty(int id);
+        Task<object> GetProperty(int id);
     }
 }

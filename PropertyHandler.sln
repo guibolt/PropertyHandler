@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyHandler.Api", "src\PropertyHandler.Api\PropertyHandler.Api.csproj", "{3AAC5132-AAE7-497F-A49D-AC7287E9C2B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyHandler.Api", "src\PropertyHandler.Api\PropertyHandler.Api.csproj", "{3AAC5132-AAE7-497F-A49D-AC7287E9C2B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyHandler.Infra", "src\PropertyHandler.Infra\PropertyHandler.Infra.csproj", "{1C8CC7CE-010B-4142-AAD8-585AB4EE7C62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyHandler.Infra", "src\PropertyHandler.Infra\PropertyHandler.Infra.csproj", "{1C8CC7CE-010B-4142-AAD8-585AB4EE7C62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyHandler.Core", "src\PropertyHandler.Core\PropertyHandler.Core.csproj", "{4E009246-23AF-449E-81C5-3DFA95DEB87F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyHandler.Core", "src\PropertyHandler.Core\PropertyHandler.Core.csproj", "{4E009246-23AF-449E-81C5-3DFA95DEB87F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyHandler.Services", "src\PropertyHandler.Services\PropertyHandler.Services.csproj", "{6B4ED22A-4C55-4532-AE03-910E291121DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyHandler.Services", "src\PropertyHandler.Services\PropertyHandler.Services.csproj", "{6B4ED22A-4C55-4532-AE03-910E291121DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyHandler.Tests", "tests\PropertyHandler.Tests\PropertyHandler.Tests.csproj", "{AFDBD9BE-2207-414A-AE97-88A114327043}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6B4ED22A-4C55-4532-AE03-910E291121DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B4ED22A-4C55-4532-AE03-910E291121DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B4ED22A-4C55-4532-AE03-910E291121DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFDBD9BE-2207-414A-AE97-88A114327043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDBD9BE-2207-414A-AE97-88A114327043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDBD9BE-2207-414A-AE97-88A114327043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDBD9BE-2207-414A-AE97-88A114327043}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

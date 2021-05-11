@@ -1,4 +1,5 @@
-﻿using PropertyHandler.Core.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using PropertyHandler.Core.Entities;
 using PropertyHandler.Core.Enums;
 using PropertyHandler.Core.Helpers;
 using PropertyHandler.Core.Interfaces;
@@ -6,6 +7,7 @@ using PropertyHandler.Core.Interfaces.Repository;
 using PropertyHandler.Core.Interfaces.Services;
 using PropertyHandler.Core.Notifications;
 using PropertyHandler.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,13 +19,15 @@ namespace PropertyHandler.Services.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IAddressRepository _addressRepository;
         private readonly IDetailRepository _detailsRepository;
+        private readonly IImageRepository _imageRepository;
 
         public PropertyService(IPropertyRepository propertyRepository, IAddressRepository addressRepository,
-            IDetailRepository detailsRepository, INotifier notifier) : base(notifier)
+            IDetailRepository detailsRepository, IImageRepository imageRepository, INotifier notifier) : base(notifier)
         {
             _propertyRepository = propertyRepository;
             _addressRepository = addressRepository;
             _detailsRepository = detailsRepository;
+            _imageRepository = imageRepository;
         }
 
         public async Task<IEnumerable<object>> GetProperties()
@@ -50,7 +54,7 @@ namespace PropertyHandler.Services.Services
             return lstPropertyviewModels;
         }
 
-        public async Task<int> RegisterProperty(PropertyViewModel propertyViewModel)
+        public async Task<int> RegisterProperty(PropertyViewModel propertyViewModel, List<IFormFile> imagens)
         {
             var property = Mapper.PropertyMap(propertyViewModel);
             property.Detail = Mapper.DetailMap(propertyViewModel.Detalhe);
@@ -64,10 +68,28 @@ namespace PropertyHandler.Services.Services
             var insertedDetailId = await _detailsRepository.Insert(property.Detail);
             await _propertyRepository.UpdateAddressAndDetail(insertedAddressId, insertedDetailId, insertedPropertyId);
 
+            foreach (var arquivo in imagens)
+            {
+                PropertyImage novaImagem = new()
+                {
+                    Active = true,
+                    FileId = Guid.NewGuid(),
+                    FileType = arquivo.ContentType,
+                    Name = arquivo.FileName,
+                    PropertyId = insertedPropertyId,
+                    RegisterDate = DateTime.Now
+                };
+
+                await FileHelper.CreateFile(arquivo, novaImagem.FileId.ToString());
+                await _imageRepository.Insert(novaImagem);
+            }
+
+            
+
             return insertedPropertyId;
         }
 
-        public async Task<PropertyViewModel> GetProperty(int id)
+        public async Task<object> GetProperty(int id)
         {
             var property = await _propertyRepository.GetPerId(id);
 
@@ -79,8 +101,10 @@ namespace PropertyHandler.Services.Services
 
             property.Address = await _addressRepository.GetPerPropetyId(id);
             property.Detail = await _detailsRepository.GetPerPropetyId(id);
+            property.Images = await _imageRepository.GetAllPerPropetyId(id);
+            var propertyImages = await _imageRepository.GetAllPerPropetyId(property.Id);
 
-            PropertyViewModel propertyViewModel = new()
+            var returnedProperty = new
             {
                 Codigo = property.Code,
                 ValorCondominio = property.CondominiumPrice,
@@ -108,10 +132,17 @@ namespace PropertyHandler.Services.Services
                     Estado = property.Address.State,
                     NumeroRua = property.Address.LocationNumber,
                     Rua = property.Address.Street
-                }
+                },
+                Imagens = from image in propertyImages
+                          select new
+                          {
+                              IdArquivo = image.FileId,
+                              NomeImagem = image.Name,
+                              TipoArquivo = image.FileType,
+                          }
             };
 
-            return propertyViewModel;
+            return returnedProperty;
         }
     }
 }

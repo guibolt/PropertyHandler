@@ -26,6 +26,7 @@ namespace PropertyHandler.Api.Configurations
             services.AddScoped<IPropertyRepository, PropertyRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IDetailRepository, DetailRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
 
             return services;
         }
