@@ -35,12 +35,20 @@ namespace PropertyHandler.Api.Controllers
                 });
             }
 
-            _logger.Info(result);
-            return BadRequest(new
+            var objReturnError = new
             {
                 success = false,
                 errors = _notifier.GetNotifications().Select(n => n.Message)
-            });
+            };
+
+            _logger.Error(objReturnError);
+
+            var firstNotification = _notifier.GetNotifications().First();
+
+            if (firstNotification.ErrorType == Core.Enums.ETypeError.NotFound)
+                return NotFound(objReturnError);
+
+            return BadRequest(objReturnError);
         }
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)

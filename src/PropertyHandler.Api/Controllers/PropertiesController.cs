@@ -23,15 +23,21 @@ namespace PropertyHandler.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var properties = await _propertyService.GetProperties();
-
             return CustomResponse(properties);
         }
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromForm] PropertyViewModel propertyViewModel,List<IFormFile> imagens)
+        public async Task<IActionResult> Register([FromForm] PropertyViewModel propertyViewModel, List<IFormFile> imagens)
         {
             var insertedId = await _propertyService.RegisterProperty(propertyViewModel);
+            return Created($"{HttpContext.Request.Host}{HttpContext.Request.Path}", insertedId);
+        }
 
-            return Created("", insertedId);
+        [HttpGet("get/{id:int}")]
+        public async Task<IActionResult> GetPerId(int id)
+        {
+            var property = await _propertyService.GetProperty(id);
+            return CustomResponse(property);
         }
     }
 }

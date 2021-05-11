@@ -37,6 +37,7 @@ namespace PropertyHandler.Infra.Repository
                 Active = true,
                 entity.Code,
                 entity.Description,
+                entity.Title,
                 entity.RentPrice,
                 entity.SalePrice,
                 entity.TaxPrice,
@@ -48,9 +49,9 @@ namespace PropertyHandler.Infra.Repository
                 entity.SpecificType
             };
 
-            var sqlQuery = @"INSERT INTO Properties (RegisterDate,Active,Code,Description,RentPrice,
+            var sqlQuery = @"INSERT INTO Properties (RegisterDate,Active,Code,Description, Title,RentPrice,
                 SalePrice,TaxPrice,CondominiumPrice,OwnerName,IsSpotlight,Status,Type,SpecificType)
-                VALUES(@RegisterDate,@Active,@Code,@Description,@RentPrice,
+                VALUES(@RegisterDate,@Active,@Code,@Description,@Title,@RentPrice,
                 @SalePrice,@TaxPrice,@CondominiumPrice,@OwnerName,@IsSpotlight,@Status,@Type,@SpecificType) 
                 SELECT @@IDENTITY AS [@@IDENTITY];";
 
