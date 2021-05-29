@@ -11,9 +11,5 @@ namespace PropertyHandler.Core.Entities
         public int BathRoomQuantity { get; set; }
         public int PropertyId { get; set; }
 
-        public static implicit operator Detail(Address v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

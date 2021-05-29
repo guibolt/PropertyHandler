@@ -11,6 +11,7 @@ namespace PropertyHandler.Api
 {
     public class Startup
     {
+        private readonly string _enableCors = "MyCors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +26,7 @@ namespace PropertyHandler.Api
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "PropertyHandler.Api", Version = "v1" }));
             services.AddLogging(logging => logging.AddKissLog());
+            services.AddCors(opt => opt.AddPolicy(_enableCors, builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,7 +41,7 @@ namespace PropertyHandler.Api
             app.UseKissLog(Configuration);
 
             app.UseHttpsRedirection();
-
+            app.UseCors(_enableCors);
             app.UseRouting();
 
             app.UseAuthorization();

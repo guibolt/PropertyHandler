@@ -30,7 +30,7 @@ namespace PropertyHandler.Api.Controllers
         public async Task<IActionResult> Register([FromForm] PropertyViewModel propertyViewModel, List<IFormFile> imagens)
         {
             var insertedId = await _propertyService.RegisterProperty(propertyViewModel,imagens);
-            return Created($"{HttpContext.Request.Host}{HttpContext.Request.Path}", insertedId);
+            return CustomResponse(insertedId);
         }
 
         [HttpGet("get/{id:int}")]

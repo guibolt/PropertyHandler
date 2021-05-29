@@ -6,6 +6,7 @@ using PropertyHandler.Core.Interfaces;
 using PropertyHandler.Core.Interfaces.Repository;
 using PropertyHandler.Core.Interfaces.Services;
 using PropertyHandler.Core.Notifications;
+using PropertyHandler.Core.Validators;
 using PropertyHandler.Core.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,9 @@ namespace PropertyHandler.Services.Services
             var property = Mapper.PropertyMap(propertyViewModel);
             property.Detail = Mapper.DetailMap(propertyViewModel.Detalhe);
             property.Address = Mapper.AddressMap(propertyViewModel.Endereco);
+
+            if (!ExecuteValidation(new PropertyValidation(), property))
+                return 0;
 
             var insertedPropertyId = await _propertyRepository.Insert(property);
             property.Detail.PropertyId = insertedPropertyId;
