@@ -61,7 +61,9 @@ namespace PropertyHandler.Services.Services
             property.Detail = Mapper.DetailMap(propertyViewModel.Detalhe);
             property.Address = Mapper.AddressMap(propertyViewModel.Endereco);
 
-            if (!ExecuteValidation(new PropertyValidation(), property))
+            if (!ExecuteValidation(new PropertyValidation(), property) 
+                || !ExecuteValidation(new DetailValidation(), property.Detail)
+                || !ExecuteValidation(new AddressValidation(), property.Address))
                 return 0;
 
             var insertedPropertyId = await _propertyRepository.Insert(property);
@@ -87,8 +89,6 @@ namespace PropertyHandler.Services.Services
                 await FileHelper.CreateFile(arquivo, novaImagem.FileId.ToString());
                 await _imageRepository.Insert(novaImagem);
             }
-
-            
 
             return insertedPropertyId;
         }

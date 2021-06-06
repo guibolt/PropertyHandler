@@ -27,7 +27,6 @@ namespace PropertyHandler.Core.Validators
              .Length(10, 100)
              .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
-
         }
     }
 }
